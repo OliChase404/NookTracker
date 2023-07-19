@@ -1,12 +1,8 @@
-from flask import Flask, request, jsonify, make_response, session, flash
+from flask import Flask, request, jsonify, make_response, session
 from config import app, db
-from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
-from flask_migrate import Migrate
-import sys
-sys.path.insert(0, '../../')
 from models import *
-CORS(app)
+
 
 @app.route('/check_session', methods=['GET'])
 def check_session():
@@ -72,44 +68,48 @@ def bug():
     return response 
 
 @app.route('/forum', methods=['GET', 'POST', 'PATCH', 'DELETE'])
-def posts():
-        if request.method == 'GET':
-            posts = []
-            for post in Post.query.all():
-                post_dict = post.to_dict()
-                posts.append(post_dict)
+def index_posts():
+    if request.method == 'GET':
+        posts = []
+        for post in Post.query.all():
+            post_dict = post.to_dict()
+            posts.append(post_dict)
 
-            response = make_response(
-                posts, 
-                200
-            )    
-            return response 
-        elif request.method == 'POST':
-                request_json = request.get_json()
-                new_post = Post(
-                    title = request_json.get('title'),
-                    content = request_json.get('content')
-                )
-                db.session.add(new_post)
-                db.session.commit()
-                response = make_response(
-                new_post.to_dict(),
-                201
-                )    
-                return response   
-        elif request.method == 'PATCH':
-             request_json = request.get_json()
-             edit_post = Post(
-                  title = request_json.patch('title'),
-                  content = request_json.patch('content')
-                  )
-        db.session.add(edit_post)
-        db.session.commit()
         response = make_response(
-             edit_post.to_dict(),
-             201
-        )     
-        return response       
+            posts, 
+            200
+        )    
+        return response
+    elif request.method == 'POST':
+        request_json = request.get_json()
+        new_post = Post(
+            user_id = request_json.get('user_id'), 
+            title = request_json.get('title'), 
+            content = request_json.get('content')
+        )    
+        db.session.add(new_post)
+        db.session.commit()  
+        return new_post.to_dict()
+        
+@app.route('/forum/<int:id>', methods=['GET', 'PATCH', 'DELETE'])
+def show_post(id):
+    if request.method == 'GET':
+        post = Post.query.filter(Post.id == id).first()
+        return post.to_dict(), 200
+    elif request.method == 'PATCH':
+        request_json = request.get_json()
+        post = Post.query.filter(Post.id == id).first()
+        post.title = request_json.get('title')
+        post.content = request_json.get('content')
+        db.session.commit()
+        return post.to_dict(), 200
+    elif request.method == 'DELETE':
+        post = Post.query.filter(Post.id == id).first()
+        db.session.delete(post)
+        db.session.commit()
+        return post.to_dict(), 200
+    
+
 
 @app.route('/list', methods=['GET', 'POST'])
 def lists():

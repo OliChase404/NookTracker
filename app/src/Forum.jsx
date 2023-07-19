@@ -1,33 +1,21 @@
 import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { ActionTypes } from "./containers/redux/constants/action-types";
+import PostCardContainer from "./PostCardContainer";
 
-export const PostForm = (props) => {
+export const PostForm = () => {
   const [title, setTitle] = useState("");  
   const [content, setContent] = useState("");
   const [tag, setTag] = useState("");
   const dispatch = useDispatch();
-  const posts = useSelector((state) => state.posts); 
   const [allPosts, setAllPosts] = useState([]);
+
   useEffect(()=>{
     fetch("/forum")
     .then(r=>r.json())
     .then(posts=>setAllPosts(posts))
   },[])
 
-  const displayPosts = allPosts.map((post) => {
-    return (
-        <div>
-        <h1>{post.title}</h1>
-        <p>{post.content}</p>
-        <p>{post.tag}</p>
-        <button onClick={((event) => handlePatch(event))}>Edit Post</button>
-        <button onClick={((event) => handleDelete(event))}>Delete Post</button>
-        </div>
-    )
-  })
-
-  function handlePatch
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -42,9 +30,7 @@ export const PostForm = (props) => {
       }),
     })
       .then((r) => r.json())
-      .then((newPost) =>
-        dispatch({ type: ActionTypes.SET_POST, payload: newPost })
-      );
+      .then((newPost) => {setAllPosts([...allPosts, newPost])});
   }
 
   return (
@@ -60,9 +46,7 @@ export const PostForm = (props) => {
         </form>
       </label>
 
-      <div>
-        {displayPosts}
-      </div>
+      <PostCardContainer allPosts={allPosts} setAllPosts={setAllPosts}/>
     </div>
   );
 };
