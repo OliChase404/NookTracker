@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import axios from 'axios';
-import finalPropsSelectorFactory from "react-redux/es/connect/selectorFactory";
 
 export const Register = (props) => {
     const [name, setName] = useState('')
