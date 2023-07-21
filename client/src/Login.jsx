@@ -2,43 +2,39 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ActionTypes } from "./containers/redux/constants/action-types"
 import { useHistory } from "react-router-dom";
+import { UserContext } from "./App";
 
 export const Login = (props) => {
+    const { user, setUser } = React.useContext(UserContext);
+
     const [username, setUsername] = useState('');
     const [pass, setPass] = useState('')
+    const [errors, setErrors] = useState([])
     const history = useHistory()
-    const dispatch = useDispatch()
-    const currentUser = useSelector(state => state.currentUser)
 
-    const loginFetch = () => {
-        return function loginFetchThunk(dispatch){
-            fetch("/login", {method:'POST',
-             body:JSON.stringify(
-                {username: username, password: pass}),
-            headers: {"Content-Type":"application/json"}
-            })
-            .then(response => response.json())
-            .then(data => dispatch({type: ActionTypes.SET_USER, payload: data}))
-            history.push("/dashboard")
-            
-        }
-    }
+    function handleSubmit(e) {
+        e.preventDefault();
+        fetch("/login", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ username: username, password: pass }),
+        })
+          .then((r) => {
+            if (r.ok) {
+              r.json().then((user) => {
+                setUser(user);
+                history.push("/dashboard");
+              });
+            } else {
+              r.json().then((err) => setErrors(err.errors))
+
+            }
+          })
+          .catch((error) => console.error(error));
+      }
     
-        
-
-    const handleSubmit = (e) => {
-        e.preventDefault(); 
-        dispatch(loginFetch())
-        
-    //         fetch("/login", {method:'POST',
-    //          body:JSON.stringify(
-    //             {username: username, password: pass}),
-    //         headers: {"Content-Type":"application/json"}
-    //         })
-    //         .then(response => response.json())
-    //         .then(data => dispatch({type: ActionTypes.SET_USER, payload: data}))
-            
-        }
         
     return (
     <div className="auth-form-container">

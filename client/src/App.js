@@ -4,7 +4,7 @@ import { Lists } from "./Lists"
 import React, { useState, createContext, useEffect } from "react"
 import { Login } from "./Login";
 import { Register } from "./Register";
-import ItemComponent from './containers/ItemComponent';
+// import ItemComponent from './containers/ItemComponent';
 import { Switch, Route, useHistory } from "react-router-dom";
 import { PostForm } from './Forum';
 import { Fish } from './Fish';
@@ -44,6 +44,8 @@ function App() {
   return (
     <div className='App'>
       <UserContext.Provider value={{ user, setUser }}>
+      {/* {user ? <h1>Welcome, {user.username}</h1> : <h1>User has not been set</h1>} */} 
+      {/* ^^^^^^^^^^^^ this is a good way to check if the user is logged in or not */}
         <NavBar />
         <Switch>
         <Route path="/login" render={() => (

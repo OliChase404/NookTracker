@@ -1,5 +1,5 @@
 from flask import Flask, request, jsonify, make_response, session
-from config import app, db
+from config import app, db, bcrypt
 from flask_sqlalchemy import SQLAlchemy
 from models import *
 
@@ -47,25 +47,15 @@ def signup():
 
 @app.route('/lists/fish', methods=['GET'])
 def fish():
-
     fish = [fish.to_dict() for fish in Item.query.filter(Item.category == "fish")]
-
-    response = make_response(
-            jsonify(fish),
-            200
-        )
+    response = make_response(jsonify(fish), 200)
     return response 
 
 @app.route('/lists/bugs', methods=['GET'])
 def bug():
-
     bug = [bug.to_dict() for bug in Item.query.filter(Item.category == "bug")] 
-
-    response = make_response(
-        jsonify(bug),
-        200
-                             )    
-    return response 
+    response = make_response(jsonify(bug), 200)
+    return response
 
 @app.route('/forum', methods=['GET', 'POST', 'PATCH', 'DELETE'])
 def index_posts():
