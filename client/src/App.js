@@ -12,6 +12,7 @@ import { Bugs } from './Bugs';
 import { List } from './List';
 import { Dashboard } from './Dashboard';
 
+
 function App() {
   const [currentForm, setCurrentForm] = useState('login');
 
@@ -21,6 +22,7 @@ function App() {
 
   return (
     <div className='App'>
+      {/* <NavBar /> */}
       <Switch>
       <Route path="/login" render={() => (
   currentForm === 'login' ? <Login onFormSwitch={toggleForm} /> : <Register onFormSwitch={toggleForm} />
