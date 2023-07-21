@@ -11,6 +11,7 @@ import { Fish } from './Fish';
 import { Bugs } from './Bugs';
 import { List } from './List';
 import { Dashboard } from './Dashboard';
+import NavBar from './NavBar/NavBar';
 
 
 function App() {
@@ -22,11 +23,11 @@ function App() {
 
   return (
     <div className='App'>
-      {/* <NavBar /> */}
+        <NavBar />
       <Switch>
       <Route path="/login" render={() => (
-  currentForm === 'login' ? <Login onFormSwitch={toggleForm} /> : <Register onFormSwitch={toggleForm} />
-)} />
+        currentForm === 'login' ? <Login onFormSwitch={toggleForm} /> : <Register onFormSwitch={toggleForm} />
+        )} />
       <Route path="/lists/bugs">
         <Bugs />
       </Route>
