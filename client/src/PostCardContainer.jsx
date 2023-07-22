@@ -26,7 +26,7 @@ function PostCardContainer({allPosts, setAllPosts}){
     })
 
     return(
-        <div>{displayPosts}</div>
+        <div className='PostContainer'>{displayPosts}</div>
         )
 }
 

@@ -4,8 +4,10 @@
   flex-direction: column;
   min-height: 100vh;
   align-items: center;
-  justify-content: center;
+  /* justify-content: center; */
   background-image: linear-gradient(79deg, #e916e9, #8020c0 48%, #4418e4);
+  color: white;
+  font-weight: 700;
 }
 
 body{
@@ -82,7 +84,56 @@ button:hover {
 }
 .LogoutButton{
   background: none;
-  /* color: rgba(255, 255, 255, 0.897); */
-  /* text-decoration: underline; */
   cursor: pointer;
 }
+
+.Forum {
+  display: flex;
+  flex-direction: column;
+  margin-top: 2vh;
+}
+
+.ForumBody {
+  display: flex;
+  flex-direction: row;
+  width: 100vw;
+  justify-content: space-evenly;
+
+
+}
+
+.ForumBody form {
+  display: flex;
+  flex-direction: column;
+  font-weight: bolder;
+}
+
+.ForumBody input {
+  /* margin: 0.5rem; */
+  padding: 1rem;
+  border: none;
+  border-radius: 10px;
+  width: 25vw;
+  background-color: rgba(0, 167, 218, 0.26);
+  color: white;
+}
+
+.PostContainer {
+  display: flex;
+  flex-direction: column;
+  width: 65vw;
+  margin: 1rem;
+  padding: 1rem;
+  border: 1px solid rgb(255, 255, 255);
+  border-radius: 10px;
+  background-color: rgba(0, 167, 218, 0.26);
+  color: white;
+}
+
+.ForumBody textarea {
+  height: 30vh;
+  border-radius: 10px;
+  background-color: rgba(0, 167, 218, 0.26);
+  color: white;
+}
+
