@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
 import PostCardContainer from "./PostCardContainer";
+import { UserContext } from "../App";
 
 export const PostForm = () => {
+  const { user } = React.useContext(UserContext);
   const [title, setTitle] = useState("");  
   const [content, setContent] = useState("");
   const [tag, setTag] = useState("");
@@ -23,6 +25,7 @@ export const PostForm = () => {
       body: JSON.stringify({
         title: title,
         content: content,
+        user_id: user.username,
       }),
     })
       .then((r) => r.json())

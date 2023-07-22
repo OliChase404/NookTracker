@@ -6,7 +6,7 @@ import { Login } from "./Login";
 import { Register } from "./Register";
 // import ItemComponent from './containers/ItemComponent';
 import { Switch, Route, useHistory } from "react-router-dom";
-import { PostForm } from './Forum';
+import { PostForm } from './Forum/Forum';
 import { Fish } from './Fish';
 import { Bugs } from './Bugs';
 import { List } from './List';
