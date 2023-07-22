@@ -22,7 +22,7 @@ function PostCardContainer({allPosts, setAllPosts}){
     }
     
     const displayPosts = allPosts.map((post) => {
-        return <PostCard key={post.id} post={post} handleDelete={handleDelete}/>
+        return <PostCard key={post.id} post={post} handleDelete={handleDelete} allPosts={allPosts} setAllPosts={setAllPosts}/>
     })
 
     return(
